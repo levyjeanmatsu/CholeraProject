@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Plotly Charts</title>
+  <title>Plotly</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
 
-<h1>hello there</h1>
+<div id="test"></div>
+<script>
+  var data = [{
+    x: [0, 10, 20, 30, 40, 50],
+    y: [0, 10, 20, 30, 40, 50] }];
+  var layout = {font: {size: 18}};
+  var config = {responsive: true};
+  TESTER = document.getElementById('test');
+  Plotly.newPlot(TESTER, data, layout, config);
+</script>
 
 </body>
 </html>

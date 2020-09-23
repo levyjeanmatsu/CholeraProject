@@ -8,17 +8,6 @@
 </head>
 <body>
 
-<div id="test"></div>
-<script src = "choleraLine.js"></script>
-<script>
-  var data = [{
-    x: [0, 10, 20, 30, 40, 50],
-    y: [0, 10, 20, 30, 40, 50] }];
-  var layout = {font: {size: 18}};
-  var config = {responsive: true};
-  TESTER = document.getElementById('test');
-  Plotly.newPlot(TESTER, data, layout, config);
-</script>
 
 <div id="lineChart"></div>
 <script>
@@ -76,11 +65,6 @@
         prevTotDeaths = totalDeaths;
         prevTotAttacks = totalAttacks;
     }
-
-
-
-
-
 
     // clean date
     for (i = 0; i < cellValues[1].length; i++) {
@@ -182,10 +166,104 @@
 
     Plotly.newPlot('attackTable', tableData, layout, config);
 
-    Plotly.newPlot('choleraLine', lineData, layout, config)
+    Plotly.newPlot('choleraLine', lineData, layout, config);
   });
+</script>
+
+<div id='genderTable'></div>
+<script>
+  Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
+
+    function unpack(rows, key) {
+      return rows.map(function(row) { return row[key]; });
+    }
+
+    var headerNames = Plotly.d3.keys(rows[0]);
+
+    var headerValues = [];
+    var cellValues = [];
+    for (i = 0; i < headerNames.length; i++) {
+      headerValue = [headerNames[i]];
+      headerValues[i] = headerValue;
+      cellValue = unpack(rows, headerNames[i]);
+      cellValues[i] = cellValue;
+    }
 
 
+    var genderData = [{
+      type: 'table',
+      columnwidth: [150,600,1000],
+      columnorder: [0,1,2,3],
+      header: {
+        values: headerValues,
+        align: "center",
+        line: {width: 1},
+        fill: {color: ['rgb(235, 100, 230)']},
+        font: {family: "Arial", size: 8, color: "white"}
+      },
+      cells: {
+        values: cellValues,
+        align: ["center", "center"],
+        line: {color: "black", width: 1},
+        fill: {color: ['rgba(228, 222, 249, 0.65)','rgb(235, 193, 238)', 'rgba(228, 222, 249, 0.65)']},
+        font: {family: "Arial", size: 9, color: ["black"]}
+      }
+    }]
+
+    var layout = {
+      title: "Male and Female Fatalities"
+    }
+
+    Plotly.newPlot('genderTable', genderData, layout);
+  });
+</script>
+
+<div id='censusTable'></div>
+<script>
+  Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
+
+    function unpack(rows, key) {
+      return rows.map(function(row) { return row[key]; });
+    }
+
+    var headerNames = Plotly.d3.keys(rows[0]);
+
+    var headerValues = [];
+    var cellValues = [];
+    for (i = 0; i < headerNames.length; i++) {
+      headerValue = [headerNames[i]];
+      headerValues[i] = headerValue;
+      cellValue = unpack(rows, headerNames[i]);
+      cellValues[i] = cellValue;
+    }
+
+
+    var censusData = [{
+      type: 'table',
+      columnwidth: [150,600,1000],
+      columnorder: [0,1,2,3],
+      header: {
+        values: headerValues,
+        align: "center",
+        line: {width: 1},
+        fill: {color: ['rgb(235, 100, 230)']},
+        font: {family: "Arial", size: 8, color: "white"}
+      },
+      cells: {
+        values: cellValues,
+        align: ["center", "center"],
+        line: {color: "black", width: 1},
+        fill: {color: ['rgba(228, 222, 249, 0.65)','rgb(235, 193, 238)', 'rgba(228, 222, 249, 0.65)']},
+        font: {family: "Arial", size: 9, color: ["black"]}
+      }
+    }]
+
+    var layout = {
+      title: "UK Census: Male and Females living in the UK at the same time"
+    }
+
+    Plotly.newPlot('censusTable', censusData, layout);
+  });
 
 </script>
 

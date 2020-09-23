@@ -219,6 +219,12 @@
 </script>
 
 <div id='censusTable'></div>
+<div id='malePie'></div>
+<div id='femalePie'></div>
+<div id='maleBar'></div>
+<div id='femaleBar'></div>
+<div id='totalPie'></div>
+
 <script>
   Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
@@ -268,11 +274,82 @@
       }
     }]
 
-    var layout = {
+    var censusLayout = {
       title: "UK Census: Male and Females living in the UK at the same time"
     }
 
-    Plotly.newPlot('censusTable', censusData, layout);
+    var malePieData = [{
+      values: cellValues[1],
+      labels: cellValues[0],
+      type: 'pie'
+    }];
+
+    var malePieLayout = {
+      height: 400,
+      width: 500
+    };
+
+    var femalePieData = [{
+      values: cellValues[1],
+      labels: cellValues[0],
+      type: 'pie'
+    }];
+
+    var femalePieLayout = {
+      height: 400,
+      width: 500
+    };
+
+    var maleAges = {
+      x: cellValues[0],
+      y: cellValues[1],
+      name: 'Male Population',
+      type: 'bar'
+    };
+
+    var maleBarData = [maleAges];
+
+    var maleBarLayout = {barmode: 'group'};
+
+    var femaleAges = {
+      x: cellValues[0],
+      y: cellValues[2],
+      name: 'Female Population',
+      type: 'bar'
+    };
+
+    var femaleBarData = [femaleAges];
+
+    var femaleBarLayout = {barmode: 'group'};
+
+    maleTotal = 0;
+    femaleTotal = 0;
+    for (i = 0; i < cellValues[1].length; i++) {
+      currMale = Number(cellValues[1][i]);
+      maleTotal = currMale + maleTotal;
+      currFemale = Number(cellValues[2][i]);
+      femaleTotal = currFemale + femaleTotal;
+    }
+
+    var totalPieData = [{
+      values: [maleTotal,femaleTotal],
+      labels: ['males', 'females'],
+      type: 'pie'
+    }];
+
+    var totalPieLayout = {
+      height: 400,
+      width: 500
+    };
+
+    var config = {responsive: true}
+
+    Plotly.newPlot('censusTable', censusData, censusLayout, config);
+    Plotly.newPlot('malePie', malePieData, malePieLayout, config);
+    Plotly.newPlot('femalePie',femalePieData, femalePieLayout, config);
+    Plotly.newPlot('maleBar',maleBarData, maleBarLayout, config);
+    Plotly.newPlot('femaleBar',femaleBarData, femaleBarLayout, config);
+    Plotly.newPlot('totalPie',totalPieData, totalPieLayout, config);
   });
 
 </script>

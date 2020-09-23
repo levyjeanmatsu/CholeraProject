@@ -227,6 +227,7 @@
     }
 
     var headerNames = Plotly.d3.keys(rows[0]);
+    headerNames.push("Total");
 
     var headerValues = [];
     var cellValues = [];
@@ -235,6 +236,15 @@
       headerValues[i] = headerValue;
       cellValue = unpack(rows, headerNames[i]);
       cellValues[i] = cellValue;
+    }
+
+    console.log(headerValues);
+    console.log(cellValues);
+    for (i=0; i < cellValues[3].length; i++) {
+      males = Number(cellValues[1][i]);
+      females = Number(cellValues[2][i]);
+      total = males + females;
+      cellValues[3][i] = total.toString();
     }
 
 

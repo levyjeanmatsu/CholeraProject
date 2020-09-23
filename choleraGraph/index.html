@@ -41,6 +41,8 @@
 
 <div id='attackTable'></div>
 
+<div id='choleraLine'></div>
+
 <script>
   // source : https://plotly.com/javascript/table/
   Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
@@ -87,7 +89,7 @@
     }
 
 
-    var data = [{
+    var tableData = [{
       type: 'table',
       columnwidth: [600,300,300,300,300],
       columnorder: [0,1,2,3,4],
@@ -107,12 +109,83 @@
       }
     }]
 
-    var layout = {
-      title: "cholera deaths"
-    }
+    var attackTrace = {
+      x: cellValues[0],
+      y: cellValues[1],
+      mode: 'lines+markers',
+      name: 'Attacks',
+      marker: {
+        color: 'rgb(50, 50, 50)',
+        size: 2
+      },
+      line: {
+        color: 'rgb(50, 50, 50)',
+        width: 2
+      }
+    };
 
-    Plotly.newPlot('attackTable', data, layout);
+    var deathTrace = {
+      x: cellValues[0],
+      y: cellValues[2],
+      mode: 'lines+markers',
+      name: 'Deaths',
+      marker: {
+        color: 'rgb(128, 0, 128)',
+        size: 2
+      },
+      line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+      }
+    };
+
+    var totAttackTrace = {
+      x: cellValues[0],
+      y: cellValues[3],
+      mode: 'lines+markers',
+      name: 'Cummulative Attacks',
+      line: {
+        color: 'rgb(55, 128, 191)',
+        width: 2
+      },
+      marker: {
+        color: 'rgb(55, 128, 191)',
+        size: 2
+      }
+    };
+
+    var totDeathTrace = {
+      x: cellValues[0],
+      y: cellValues[4],
+      mode: 'lines+markers',
+      name: 'Cummulative Deaths',
+      line: {
+        color: 'rgb(219, 64, 82)',
+        width: 2
+      },
+      marker: {
+        color: 'rgb(219, 64, 82)',
+        size: 2
+      }
+    };
+
+
+    var lineData = [attackTrace, deathTrace, totAttackTrace, totDeathTrace];
+
+    var layout = {
+      title: "cholera deaths",
+      width: 1920,
+      height: 1080,
+    };
+
+    var config = {response: true};
+
+    Plotly.newPlot('attackTable', tableData, layout, config);
+
+    Plotly.newPlot('choleraLine', lineData, layout, config)
   });
+
+
 
 </script>
 

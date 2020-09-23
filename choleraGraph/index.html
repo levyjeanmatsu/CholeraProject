@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plotly</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body>
+
+
+<div id="lineChart"></div>
+<script>
+  var line1 = {
+    x: [1, 2, 3, 4],
+    y: [12, 15, 13, 17],
+    type: 'scatter'
+  };
+
+  var line2 = {
+    x: [1, 2, 3, 4],
+    y: [16, 25, 11, 9],
+    type: 'scatter'
+  };
+
+  var data1 = [line1, line2];
+  lineDiv = document.getElementById('lineChart')
+  Plotly.newPlot(lineDiv, data1);
+</script>
+
+<div id='attackTable'></div>
+
+<div id='choleraLine'></div>
+
+<script>
+  // source : https://plotly.com/javascript/table/
+  Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
+
+    function unpack(rows, key) {
+      return rows.map(function(row) { return row[key]; });
+    }
+
+    var headerNames = Plotly.d3.keys(rows[0]);
+    headerNames.push("Total Attacks");
+    headerNames.push("Total Deaths");
+
+    //setting date, attack, and death columns
+    var headerValues = [];
+    var cellValues = [];
+    for (i = 0; i < headerNames.length; i++) {
+        headerValues[i] = [headerNames[i]];
+        cellValues[i] = unpack(rows, headerNames[i]);
+    }
+    console.log(cellValues);
+    console.log(headerValues);
+    console.log(cellValues[2][1]);
+
+    prevTotDeaths = 0;
+    prevTotAttacks = 0;
+    for (i = 0; i < cellValues[3].length; i++) {
+        totalAttacks = Number(cellValues[1][i])+prevTotAttacks;
+        totalDeaths = Number(cellValues[2][i])+prevTotDeaths;
+        cellValues[3][i] = totalAttacks.toString();
+        cellValues[4][i] = totalDeaths.toString();
+        prevTotDeaths = totalDeaths;
+        prevTotAttacks = totalAttacks;
+    }
+
+    // clean date
+    for (i = 0; i < cellValues[1].length; i++) {
+      var dateValue = cellValues[1][i].split(' ')[0]
+      cellValues[1][i] = dateValue
+    }
+
+
+    var tableData = [{
+      type: 'table',
+      columnwidth: [600,300,300,300,300],
+      columnorder: [0,1,2,3,4],
+      header: {
+        values: headerValues,
+        align: "center",
+        line: {width: 1, color: 'rgb(50, 50, 50)'},
+        fill: {color: ['rgb(235, 100, 230)']},
+        font: {family: "Arial", size: 8, color: "white"}
+      },
+      cells: {
+        values: cellValues,
+        align: ["center", "center"],
+        line: {color: "black", width: 1},
+        fill: {color: ['rgba(228, 222, 249, 0.65)','rgb(235, 193, 238)', 'rgba(228, 222, 249, 0.65)']},
+        font: {family: "Arial", size: 9, color: ["black"]}
+      }
+    }]
+
+    var attackTrace = {
+      x: cellValues[0],
+      y: cellValues[1],
+      mode: 'lines+markers',
+      name: 'Attacks',
+      marker: {
+        color: 'rgb(50, 50, 50)',
+        size: 2
+      },
+      line: {
+        color: 'rgb(50, 50, 50)',
+        width: 2
+      }
+    };
+
+    var deathTrace = {
+      x: cellValues[0],
+      y: cellValues[2],
+      mode: 'lines+markers',
+      name: 'Deaths',
+      marker: {
+        color: 'rgb(128, 0, 128)',
+        size: 2
+      },
+      line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+      }
+    };
+
+    var totAttackTrace = {
+      x: cellValues[0],
+      y: cellValues[3],
+      mode: 'lines+markers',
+      name: 'Cummulative Attacks',
+      line: {
+        color: 'rgb(55, 128, 191)',
+        width: 2
+      },
+      marker: {
+        color: 'rgb(55, 128, 191)',
+        size: 2
+      }
+    };
+
+    var totDeathTrace = {
+      x: cellValues[0],
+      y: cellValues[4],
+      mode: 'lines+markers',
+      name: 'Cummulative Deaths',
+      line: {
+        color: 'rgb(219, 64, 82)',
+        width: 2
+      },
+      marker: {
+        color: 'rgb(219, 64, 82)',
+        size: 2
+      }
+    };
+
+
+    var lineData = [attackTrace, deathTrace, totAttackTrace, totDeathTrace];
+
+    var layout = {
+      title: "cholera deaths",
+      width: 1920,
+      height: 1080,
+    };
+
+    var config = {response: true};
+
+    Plotly.newPlot('attackTable', tableData, layout, config);
+
+    Plotly.newPlot('choleraLine', lineData, layout, config);
+  });
+</script>
+
+<div id='genderTable'></div>
+<script>
+  Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
+
+    function unpack(rows, key) {
+      return rows.map(function(row) { return row[key]; });
+    }
+
+    var headerNames = Plotly.d3.keys(rows[0]);
+
+    var headerValues = [];
+    var cellValues = [];
+    for (i = 0; i < headerNames.length; i++) {
+      headerValue = [headerNames[i]];
+      headerValues[i] = headerValue;
+      cellValue = unpack(rows, headerNames[i]);
+      cellValues[i] = cellValue;
+    }
+
+
+    var genderData = [{
+      type: 'table',
+      columnwidth: [150,600,1000],
+      columnorder: [0,1,2,3],
+      header: {
+        values: headerValues,
+        align: "center",
+        line: {width: 1},
+        fill: {color: ['rgb(235, 100, 230)']},
+        font: {family: "Arial", size: 8, color: "white"}
+      },
+      cells: {
+        values: cellValues,
+        align: ["center", "center"],
+        line: {color: "black", width: 1},
+        fill: {color: ['rgba(228, 222, 249, 0.65)','rgb(235, 193, 238)', 'rgba(228, 222, 249, 0.65)']},
+        font: {family: "Arial", size: 9, color: ["black"]}
+      }
+    }]
+
+    var layout = {
+      title: "Male and Female Fatalities"
+    }
+
+    Plotly.newPlot('genderTable', genderData, layout);
+  });
+</script>
+
+<div id='censusTable'></div>
+<div id='malePie'></div>
+<div id='femalePie'></div>
+<div id='maleBar'></div>
+<div id='femaleBar'></div>
+<div id='totalPie'></div>
+
+<script>
+  Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
+
+    function unpack(rows, key) {
+      return rows.map(function(row) { return row[key]; });
+    }
+
+    var headerNames = Plotly.d3.keys(rows[0]);
+    headerNames.push("Total");
+
+    var headerValues = [];
+    var cellValues = [];
+    for (i = 0; i < headerNames.length; i++) {
+      headerValue = [headerNames[i]];
+      headerValues[i] = headerValue;
+      cellValue = unpack(rows, headerNames[i]);
+      cellValues[i] = cellValue;
+    }
+
+    console.log(headerValues);
+    console.log(cellValues);
+    for (i=0; i < cellValues[3].length; i++) {
+      males = Number(cellValues[1][i]);
+      females = Number(cellValues[2][i]);
+      total = males + females;
+      cellValues[3][i] = total.toString();
+    }
+
+
+    var censusData = [{
+      type: 'table',
+      columnwidth: [150,600,1000],
+      columnorder: [0,1,2,3],
+      header: {
+        values: headerValues,
+        align: "center",
+        line: {width: 1},
+        fill: {color: ['rgb(235, 100, 230)']},
+        font: {family: "Arial", size: 8, color: "white"}
+      },
+      cells: {
+        values: cellValues,
+        align: ["center", "center"],
+        line: {color: "black", width: 1},
+        fill: {color: ['rgba(228, 222, 249, 0.65)','rgb(235, 193, 238)', 'rgba(228, 222, 249, 0.65)']},
+        font: {family: "Arial", size: 9, color: ["black"]}
+      }
+    }]
+
+    var censusLayout = {
+      title: "UK Census: Male and Females living in the UK at the same time"
+    }
+
+    var malePieData = [{
+      values: cellValues[1],
+      labels: cellValues[0],
+      type: 'pie'
+    }];
+
+    var malePieLayout = {
+      height: 400,
+      width: 500
+    };
+
+    var femalePieData = [{
+      values: cellValues[1],
+      labels: cellValues[0],
+      type: 'pie'
+    }];
+
+    var femalePieLayout = {
+      height: 400,
+      width: 500
+    };
+
+    var maleAges = {
+      x: cellValues[0],
+      y: cellValues[1],
+      name: 'Male Population',
+      type: 'bar'
+    };
+
+    var maleBarData = [maleAges];
+
+    var maleBarLayout = {barmode: 'group'};
+
+    var femaleAges = {
+      x: cellValues[0],
+      y: cellValues[2],
+      name: 'Female Population',
+      type: 'bar'
+    };
+
+    var femaleBarData = [femaleAges];
+
+    var femaleBarLayout = {barmode: 'group'};
+
+    maleTotal = 0;
+    femaleTotal = 0;
+    for (i = 0; i < cellValues[1].length; i++) {
+      currMale = Number(cellValues[1][i]);
+      maleTotal = currMale + maleTotal;
+      currFemale = Number(cellValues[2][i]);
+      femaleTotal = currFemale + femaleTotal;
+    }
+
+    var totalPieData = [{
+      values: [maleTotal,femaleTotal],
+      labels: ['males', 'females'],
+      type: 'pie'
+    }];
+
+    var totalPieLayout = {
+      height: 400,
+      width: 500
+    };
+
+    var config = {responsive: true}
+
+    Plotly.newPlot('censusTable', censusData, censusLayout, config);
+    Plotly.newPlot('malePie', malePieData, malePieLayout, config);
+    Plotly.newPlot('femalePie',femalePieData, femalePieLayout, config);
+    Plotly.newPlot('maleBar',maleBarData, maleBarLayout, config);
+    Plotly.newPlot('femaleBar',femaleBarData, femaleBarLayout, config);
+    Plotly.newPlot('totalPie',totalPieData, totalPieLayout, config);
+  });
+
+</script>
+
+</body>
+</html>

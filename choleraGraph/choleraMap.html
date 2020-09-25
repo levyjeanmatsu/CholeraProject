@@ -26,6 +26,15 @@
          }
         });
 
+        rows.map(function(row){
+          if (row.type == 'pump') {
+            row.text = ' ';
+          } else {
+            row.text = row.deaths;
+          }
+        });
+
+
 
         var types = ['pump', 'death'];
 
@@ -34,11 +43,12 @@
             return (row.type === types);
           });
 
-          console.log(unpack(rowsFiltered, 'deaths'));
+          console.log(rowsFiltered);
+
           return {
             type: 'scattermapbox',
             name: types,
-            text: ['hello'],
+            text: unpack(rowsFiltered, 'text'),
             lat: unpack(rowsFiltered, 'lat'),
             lon: unpack(rowsFiltered, 'long'),
 

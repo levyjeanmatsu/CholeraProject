@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<div id="map"></div>
+<script>
+  Plotly.d3.csv(
+      "choleraDeathLocations.csv",
+      function(err, rows) {
+        function unpack(rows, key) {
+          return rows.map(function(row) {
+            return row[key];
+          });
+        }
+
+        var pumpLocations = [];
+        var deathLocations = [];
+
+        var deaths = unpack(rows, 'deaths');
+
+        for (i = 0; i < rows.length; i++) {
+          if (Number(deaths[i]) == 0) {
+            pumpLocations.push(rows[i]);
+          } else {
+            deathLocations.push(rows[i]);
+          }
+        }
+
+        var pumpMarkers = [
+          {
+            type: "scattermapbox",
+            text: "Pumps",
+            lon: unpack(pumpLocations, "long"),
+            lat: unpack(pumpLocations, "lat"),
+            marker: { color: "fuchsia", size: 4 }
+          }
+        ];
+
+        var deathMarkers = [
+          {
+            type: "scattermapbox",
+            text: "Deaths",
+            lon: unpack(deathLocations, "long"),
+            lat: unpack(deathLocations, "lat"),
+            marker: { color: 'orange', size: 4 }
+          }
+        ];
+
+
+        var data = pumpMarkers;
+
+
+
+        var layout = {
+          dragmode: "zoom",
+          mapbox: { style: "open-street-map", center: { lat: 51.52, lon: -0.127 }, zoom: 12 },
+          margin: { r: 0, t: 0, b: 0, l: 0 }
+        };
+
+        var config = {mapboxAccessToken: 'pk.eyJ1IjoibGV2eWplYW4iLCJhIjoiY2tmZzRrdTBhMDF5eTJxcHAyc2oyeTUxbyJ9.4gtxzCh3vsajA99VB5fk7g'}
+
+        Plotly.newPlot("map", data, layout, config);
+      }
+  );
+</script>
+</body>
+</html>

@@ -2,375 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Plotly</title>
+  <title>Cholera Project</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+          crossorigin=""></script>
+
 
 </head>
 <body>
-
-
 <div id='attackTable'></div>
+
+<p>
+  The table above contains data collected on the Cholera outbreak in London in 1854. More specifically, it shows the attacks and deaths per day, and the cumulative attacks and deaths up until that date. An attack is when someone exhibits symptoms of Cholera.
+</p>
 <div id='choleraLine' ></div>
+<script src="deathsAndAttacks.js"></script>
 
-<script>
-  // source : https://plotly.com/javascript/table/
-  Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
-
-    function unpack(rows, key) {
-      return rows.map(function(row) { return row[key]; });
-    }
-
-    var headerNames = Plotly.d3.keys(rows[0]);
-    headerNames.push("Total Attacks");
-    headerNames.push("Total Deaths");
-
-    //setting date, attack, and death columns
-    var headerValues = [];
-    var cellValues = [];
-    for (i = 0; i < headerNames.length; i++) {
-        headerValues[i] = [headerNames[i]];
-        cellValues[i] = unpack(rows, headerNames[i]);
-    }
-    console.log(cellValues);
-    console.log(headerValues);
-    console.log(cellValues[2][1]);
-
-    prevTotDeaths = 0;
-    prevTotAttacks = 0;
-    //setting total attacks and total deaths
-    for (i = 0; i < cellValues[3].length; i++) {
-        totalAttacks = Number(cellValues[1][i])+prevTotAttacks;
-        totalDeaths = Number(cellValues[2][i])+prevTotDeaths;
-        cellValues[3][i] = totalAttacks.toString();
-        cellValues[4][i] = totalDeaths.toString();
-        prevTotDeaths = totalDeaths;
-        prevTotAttacks = totalAttacks;
-    }
-
-
-
-    var tableData = [{
-      type: 'table',
-      columnwidth: [600,300,300,300,300],
-      columnorder: [0,1,2,3,4],
-      header: {
-        values: headerValues,
-        align: "center",
-        line: {width: 1, color: 'rgb(50, 50, 50)'},
-        fill: {color: ['#3A5B94']},
-        font: {family: "Arial", size: 12, color: "white"}
-      },
-      cells: {
-        values: cellValues,
-        align: ["center", "center"],
-        line: {color: "black", width: 1},
-        font: {family: "Arial", size: 12, color: ["black"]}
-      }
-    }];
-
-    var attackTrace = {
-      x: cellValues[0],
-      y: cellValues[1],
-      mode: 'lines+markers',
-      name: 'Attacks',
-      marker: {
-        color: '#7EF594',
-        size: 4
-      },
-      line: {
-        color: '#7EF594',
-        width: 2
-      }
-    };
-
-    var deathTrace = {
-      x: cellValues[0],
-      y: cellValues[2],
-      mode: 'lines+markers',
-      name: 'Deaths',
-      marker: {
-        color: '#F5738A',
-        size: 4
-      },
-      line: {
-        color: '#F5738A',
-        width: 2
-      }
-    };
-
-    var totAttackTrace = {
-      x: cellValues[0],
-      y: cellValues[3],
-      mode: 'lines+markers',
-      name: 'Total Attacks',
-      line: {
-        color: '#2AA341',
-        width: 2
-      },
-      marker: {
-        color: '#2AA341',
-        size: 4
-      }
-    };
-
-    var totDeathTrace = {
-      x: cellValues[0],
-      y: cellValues[4],
-      mode: 'lines+markers',
-      name: 'Total Deaths',
-      line: {
-        color: '#C2293B',
-        width: 2
-      },
-      marker: {
-        color: '#C2293B',
-        size: 4
-      }
-    };
-
-
-    var lineData = [attackTrace, deathTrace, totAttackTrace, totDeathTrace];
-
-    var tableLayout = {
-      title: "Cholera Deaths and Attacks in 1854",
-    };
-
-    var layout = {
-      title: "Cholera Deaths and Attacks in 1854",
-      xaxis: {
-        title: 'Date',
-        tickangle: -45
-      },
-      yaxis: {
-        title: 'Amount of Cases'
-      },
-      legend: {
-        x: 1,
-        xanchor: 'left',
-        y: 1
-      }
-    };
-
-
-    var config = {response: true};
-
-    Plotly.newPlot('attackTable', tableData, tableLayout, config);
-
-    Plotly.newPlot('choleraLine', lineData, layout, config);
-  });
-</script>
+<p>
+  The scatter line plot above features the same information we saw in the table we had seen before. The two green lines represents attacks, with the lighter green line representing the attacks that were recorded on that date and the darker green line represents the cumulative attacks. Similarly, the red lines represent deaths where the lighter red line is the deaths recorded on that date and the darker red line represents the cumulative deaths.
+</p>
 
 <div id='naplesTable'></div>
-<script>
-  Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
-
-    function unpack(rows, key) {
-      return rows.map(function(row) { return row[key]; });
-    }
-
-    var headerNames = Plotly.d3.keys(rows[0]);
-
-    var headerValues = [];
-    var cellValues = [];
-    for (i = 0; i < headerNames.length; i++) {
-      headerValue = [headerNames[i]];
-      headerValues[i] = headerValue;
-      cellValue = unpack(rows, headerNames[i]);
-      cellValues[i] = cellValue;
-    }
-
-
-    var naplesData = [{
-      type: 'table',
-      columnwidth: [150,600,1000],
-      columnorder: [0,1,2,3],
-      header: {
-        values: headerValues,
-        align: "center",
-        line: {width: 1},
-        fill: {color: ['#3A5B94']},
-        font: {family: "Arial", size: 12, color: "white"}
-      },
-      cells: {
-        values: cellValues,
-        align: ["center", "center"],
-        line: {color: "black", width: 1},
-        font: {family: "Arial", size: 12, color: ["black"]}
-      }
-    }]
-
-    var layout = {
-      title: "Fatalities in Naples"
-    }
-
-    var config = {responsive: true};
-
-    Plotly.newPlot('naplesTable', naplesData, layout);
-  });
-</script>
-
+<p>
+  This table shows the male and female deaths in Naples in the period 1884 through 1911. The number under the 'Female' and 'Male' columns is the amount of deaths per 10,000 inhabitants of that age group.
+</p>
 <div id='censusTable'></div>
+<p>
+  This table shows data from the UK census in 1851. It categorizes UK's population by gender and age group. It shows both, the total amount of people belonging to each age group as well as the amount of males and females in each age group.
+</p>
+
 <div id='malePie'></div>
 <div id='femalePie'></div>
+
+<p>
+  The two pie charts above is another representation of the UK Census data shown in the table we saw before. First pie chart isolates the male population of the UK and categorizes the males by age group. The second pie chart isolates the female population of the UK and categorizes the females by age group.
+</p>
+
 <div id='maleBar'></div>
 <div id='femaleBar'></div>
+<p>
+  The two bar charts above shows the same information we saw in the UK census table and the pie chart. Like the pie chart, it isolates the male and female populations and categorizes them by age group.
+</p>
+
 <div id='totalPie'></div>
+<p>
+  This pie chart shows the total female and male population of the 1851 UK census.
+</p>
+<script src="UKCensusNaples.js"></script>
 
-<script>
-  Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
-
-    function unpack(rows, key) {
-      return rows.map(function(row) { return row[key]; });
-    }
-
-    var headerNames = Plotly.d3.keys(rows[0]);
-    headerNames.push("Total");
-
-    var headerValues = [];
-    var cellValues = [];
-    for (i = 0; i < headerNames.length; i++) {
-      headerValue = [headerNames[i]];
-      headerValues[i] = headerValue;
-      cellValue = unpack(rows, headerNames[i]);
-      cellValues[i] = cellValue;
-    }
-
-    //source: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-    function formatCommas(x) {
-      return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    for (i=0; i < cellValues[3].length; i++) {
-      males = cellValues[1][i];
-      females = cellValues[2][i];
-      total = Number(males) + Number(females);
-      cellValues[3][i] = total;
-    }
-
-
-
-    var censusData = [{
-      type: 'table',
-      columnwidth: [300,600,1000],
-      columnorder: [0,1,2,3],
-      header: {
-        values: headerValues,
-        align: "center",
-        line: {width: 1},
-        fill: {color: ['#3A5B94']},
-        font: {family: "Arial", size: 12, color: "white"}
-      },
-      cells: {
-        values: cellValues,
-        align: ["center", "center"],
-        line: {color: "black", width: 1},
-        font: {family: "Arial", size: 12, color: ["black"]}
-      }
-    }]
-
-    var ageColors = ['rgb(141,211,199)','rgb(255,255,179)','rgb(190,186,218)','rgb(251,128,114)','rgb(128,177,211)','rgb(253,180,98)','rgb(179,222,105)','rgb(252,205,229)','rgb(217,217,217)'];
-
-    var censusLayout = {
-      title: "UK Census: Male and Females living in the UK at the same time"
-    }
-
-    var malePieData = [{
-      values: cellValues[1],
-      labels: cellValues[0],
-      type: 'pie',
-      marker: {
-        colors: ageColors
-      }
-    }];
-
-    var malePieLayout = {
-      title: 'Men living in the UK by Age',
-      height: 700,
-      width: 1200
-    };
-
-    var femalePieData = [{
-      values: cellValues[1],
-      labels: cellValues[0],
-      type: 'pie',
-      marker: {
-        colors: ageColors
-      },
-    }];
-
-    var femalePieLayout = {
-      title: 'Females Living in the UK by Age',
-      height: 700,
-      width: 1200
-    };
-
-    var maleAges = {
-      x: cellValues[0],
-      y: cellValues[1],
-      name: 'Male Population',
-      marker:{
-        color: ageColors
-      },
-      type: 'bar'
-    };
-
-    var maleBarData = [maleAges];
-
-    var maleBarLayout = {
-      title: 'Males living in the UK by Age',
-      barmode: 'group'};
-
-    var femaleAges = {
-      x: cellValues[0],
-      y: cellValues[2],
-      name: 'Female Population',
-      marker:{
-        color: ageColors
-      },
-      type: 'bar'
-    };
-
-    var femaleBarData = [femaleAges];
-
-    var femaleBarLayout = {
-      title: 'Females living in the UK by Age',
-      barmode: 'group'};
-
-    maleTotal = 0;
-    femaleTotal = 0;
-    for (i = 0; i < cellValues[1].length; i++) {
-      currMale = Number(cellValues[1][i]);
-      maleTotal = currMale + maleTotal;
-      currFemale = Number(cellValues[2][i]);
-      femaleTotal = currFemale + femaleTotal;
-    }
-
-    var totalPieData = [{
-      values: [maleTotal,femaleTotal],
-      labels: ['males', 'females'],
-      marker: {
-        colors: ['#8B9454','#BE8BE0']
-      },
-      type: 'pie'
-    }];
-
-    var totalPieLayout = {
-      title: 'UK Population by Gender',
-      height: 700,
-      width: 1200
-    };
-
-    var config = {responsive: true};
-
-    Plotly.newPlot('censusTable', censusData, censusLayout, config);
-    Plotly.newPlot('malePie', malePieData, malePieLayout, config);
-    Plotly.newPlot('femalePie',femalePieData, femalePieLayout, config);
-    Plotly.newPlot('maleBar',maleBarData, maleBarLayout, config);
-    Plotly.newPlot('femaleBar',femaleBarData, femaleBarLayout, config);
-    Plotly.newPlot('totalPie',totalPieData, totalPieLayout, config);
-  });
-
-</script>
 
 </body>
 </html>

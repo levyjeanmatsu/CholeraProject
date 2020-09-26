@@ -52,6 +52,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/choleraGraph" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -71,7 +72,7 @@
     </option>
   </component>
   <component name="RunManager" selected="JavaScript Debug.plotlyMap.html">
-    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/CholeraProject/choleraGraph/index.html" useBuiltInWebServerPort="true">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/CholeraProject/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="plotlyMap.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/CholeraProject/choleraGraph/plotlyMap.html" useBuiltInWebServerPort="true">

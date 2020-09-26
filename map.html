@@ -13,6 +13,11 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           crossorigin=""></script>
 
+  <style>
+    body { margin:0; padding:0; }
+    #mapId { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+
 </head>
 <body>
   <div id="mapId" style="width:1920px; height:1080px"></div>
@@ -20,8 +25,16 @@
 
   Plotly.d3.csv("choleraDeathLocations.csv", function(err, rows){
 
-    var mymap = L.map('mapId').setView([51.5287352,-0.3817827], 10);
+    var mymap = L.map('mapId', {
+      zoomSnap: 0.25
+    });
 
+    var corner1 = L.latLng(51.5158679719, -0.14633377838163142),
+        corner2 = L.latLng(51.509717905470666, -0.13252809674172113),
+        bounds = L.latLngBounds(corner1, corner2);
+
+    mymap.setView([51.51342615361525,-0.13528545915607992]);
+    mymap.setZoom(10);
     function unpack(rows, key) {
       return rows.map(function(row) { return row[key]; });
     }
@@ -34,6 +47,8 @@
       zoomOffset: -1,
       accessToken: 'pk.eyJ1IjoibGV2eWplYW4iLCJhIjoiY2tmZzRrdTBhMDF5eTJxcHAyc2oyeTUxbyJ9.4gtxzCh3vsajA99VB5fk7g'
     }).addTo(mymap);
+
+
 
     rows.map(function(row){
       if (row.deaths == 0) {
@@ -56,25 +71,65 @@
 
     var long = unpack(rows, 'long');
     var lat = unpack(rows, 'lat');
+    var deaths = unpack(rows, 'deaths');
     var type = unpack(rows, 'type');
-    var markers = [];
 
+    /*
+    var locIcon = L.Icon.extend({
+      options: {
+        shadowUrl: 'shadow.png',
+        iconSize:     [38, 95], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+        shadowAnchor: [0, 0],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      }
+    });
+
+     */
+
+    /*
+    var deathPin = new locIcon({iconUrl: 'pin.jpg'});
+    var pumpPin = new locIcon({iconUrl: 'pumpLoc.jpg'});
+
+     */
+
+
+    var markers = L.latLngBounds();
     for (i = 0; i < rows.length; i++) {
+      markers.extend([Number(lat[i]), Number(long[i])]);
+
       if (type[i] == 'pump') {
-        marker = L.marker([Number(lat[i]),Number(long[i])]).addTo(mymap);
-        marker.bindPopup('I am a pump');
+        marker = L.marker([Number(lat[i]), Number(long[i])]).addTo(mymap);
+        marker.bindPopup('Coordinate: ' + lat[i] + ',' + long[i]);
       } else {
-        circle = L.circle([Number(lat[i]),Number(long[i])], {
-          color: 'blue',
+
+        circle = L.circle([Number(lat[i]), Number(long[i])], {
+          color: 'red',
           fillOpacity: 0,
-          fillColor: 'blue',
+          fillColor: 'red',
           radius: 0.5
         }).addTo(mymap);
-        marker.bindPopup('I am a death')
+
+        var deathCont =
+            "<div>" + "Deaths: " + deaths[i] + "</div>"
+           + "<div>" + "Coordinates: " + lat[i] + "," + long[i] + "</div>"
+
+        circle.bindPopup(deathCont);
       }
-
-
     }
+
+
+    var group = L.featureGroup(markers);
+    mymap.invalidateSize();
+    mymap.fitBounds(markers);
+    map.setZoom(map.getZoom()-1);
+
+
+
+
+
+
 
   });
 </script>

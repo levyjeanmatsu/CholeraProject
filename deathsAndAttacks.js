@@ -16,9 +16,6 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
     headerValues[i] = [headerNames[i]];
     cellValues[i] = unpack(rows, headerNames[i]);
   }
-  console.log(cellValues);
-  console.log(headerValues);
-  console.log(cellValues[2][1]);
 
   prevTotDeaths = 0;
   prevTotAttacks = 0;
@@ -140,8 +137,31 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
     }
   };
 
+  var info = {
+    'width': 857.1,
+    'height': 1000,
+    'path': 'm500 82v107q0 8-5 13t-13 5h-107q-8 0-13-5t-5-13v-107q0-8 5-13t13-5h107q8 0 13 5t5 13z m143 375q0 49-31 91t-77 65-95 23q-136 0-207-119-9-14 4-24l74-55q4-4 10-4 9 0 14 7 30 38 48 51 19 14 48 14 27 0 48-15t21-33q0-21-11-34t-38-25q-35-16-65-48t-29-70v-20q0-8 5-13t13-5h107q8 0 13 5t5 13q0 10 12 27t30 28q18 10 28 16t25 19 25 27 16 34 7 45z m214-107q0-117-57-215t-156-156-215-58-216 58-155 156-58 215 58 215 155 156 216 58 215-58 156-156 57-215z',
+    'transform': 'matrix(1 0 0 -1 0 850)'
+  }
 
-  var config = {response: true};
+  var message = 'Graph Created by Levy Matsuda\n'+
+                'Tools used: Plotly.js, Leaflet.js,MapBox,ColorBrewer,AdobeColor\n' + 'csv: CholeraDeaths.csv';
+
+  var config = {
+    responsive: true,
+    scrollZoom: true,
+    modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'toggleSpikelines','toImage', 'toggleHover'],
+    modeBarButtonsToAdd: [
+      {
+        name: 'Information',
+        icon: info,
+        click: function(e) {
+          alert(message);
+        }
+
+        }]
+
+  };
 
   Plotly.newPlot('attackTable', tableData, tableLayout, config);
 

@@ -10,6 +10,8 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
   var headerValues = [];
   var cellValues = [];
+  var censusValues = [];
+
   for (i = 0; i < headerNames.length; i++) {
     headerValue = [headerNames[i]];
     headerValues[i] = headerValue;
@@ -17,18 +19,17 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
     cellValues[i] = cellValue;
   }
 
-  //source: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-  function formatCommas(x) {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-  }
-
   for (i=0; i < cellValues[3].length; i++) {
     males = cellValues[1][i];
     females = cellValues[2][i];
     total = Number(males) + Number(females);
-    cellValues[3][i] = total;
+    cellValues[3][i] = total.toString();
   }
 
+  //Source: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+  function addCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  };
 
 
   var censusData = [{
@@ -60,6 +61,8 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
       }
     }
   }
+
+  console.log(cellValues);
 
   var malePieData = [{
     values: cellValues[1],

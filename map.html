@@ -20,8 +20,16 @@
 
   Plotly.d3.csv("choleraDeathLocations.csv", function(err, rows){
 
-    var mymap = L.map('mapId').setView([51.5287352,-0.3817827], 10);
+    var mymap = L.map('mapId', {
+      zoomSnap: 0.25
+    });
 
+    var corner1 = L.latLng(51.5158679719, -0.14633377838163142),
+        corner2 = L.latLng(51.509717905470666, -0.13252809674172113),
+        bounds = L.latLngBounds(corner1, corner2);
+
+    mymap.setView([51.51342615361525,-0.13528545915607992]);
+    mymap.setZoom(10);
     function unpack(rows, key) {
       return rows.map(function(row) { return row[key]; });
     }
@@ -34,6 +42,8 @@
       zoomOffset: -1,
       accessToken: 'pk.eyJ1IjoibGV2eWplYW4iLCJhIjoiY2tmZzRrdTBhMDF5eTJxcHAyc2oyeTUxbyJ9.4gtxzCh3vsajA99VB5fk7g'
     }).addTo(mymap);
+
+
 
     rows.map(function(row){
       if (row.deaths == 0) {
@@ -56,25 +66,39 @@
 
     var long = unpack(rows, 'long');
     var lat = unpack(rows, 'lat');
+    var deaths = unpack(rows, 'deaths');
     var type = unpack(rows, 'type');
-    var markers = [];
 
+    var markers = L.latLngBounds();
     for (i = 0; i < rows.length; i++) {
+      markers.extend([Number(lat[i]), Number(long[i])]);
+
       if (type[i] == 'pump') {
-        marker = L.marker([Number(lat[i]),Number(long[i])]).addTo(mymap);
-        marker.bindPopup('I am a pump');
+        marker = L.marker([Number(lat[i]), Number(long[i])]).addTo(mymap);
+        marker.bindPopup("<div>" + "Pump Location" + "</div>" + "<div>" + "Coordinate: " + lat[i] + "," + long[i] + "</div>");
       } else {
-        circle = L.circle([Number(lat[i]),Number(long[i])], {
-          color: 'blue',
+
+        circle = L.circle([Number(lat[i]), Number(long[i])], {
+          color: 'red',
           fillOpacity: 0,
-          fillColor: 'blue',
-          radius: 0.5
+          fillColor: 'red',
+          radius: 0.7
         }).addTo(mymap);
-        marker.bindPopup('I am a death')
+
+        var deathCont =
+            "<div>" + "Deaths: " + deaths[i] + "</div>"
+            + "<div>" + "Coordinates: " + lat[i] + "," + long[i] + "</div>"
+
+        circle.bindPopup(deathCont);
       }
-
-
     }
+    mymap.setView([51.51042306836899,-0.1300787787954505], 16);
+
+
+
+
+
+
 
   });
 </script>

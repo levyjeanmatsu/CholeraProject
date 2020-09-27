@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Cholera Project Map</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -18,7 +18,7 @@
   <div id="mapId" style="width:1920px; height:1080px"></div>
 <script>
 
-  Plotly.d3.csv("choleraDeathLocations.csv", function(err, rows){
+  Plotly.d3.csv("choleraMapLocations.csv", function(err, rows){
 
     var mymap = L.map('mapId', {
       zoomSnap: 0.25

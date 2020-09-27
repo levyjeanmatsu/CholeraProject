@@ -218,11 +218,12 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   };
 
   var message = 'Graph Created by Levy Matsuda\n'+
-      'Tools used: Plotly.js, Leaflet.js,MapBox,ColorBrewer,AdobeColor\n' + 'csv: UKCencus1851.csv';
+      'Tools used: Plotly.js, Leaflet.js,MapBox,ColorBrewer,AdobeColor\n' + 'Sources: http://www.visionofbritain.org.uk/';
 
   var config = {
     responsive: true,
     scrollZoom: true,
+    modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'toggleSpikelines','toImage', 'toggleHover'],
     modeBarButtonsToAdd: [
       {
         name: 'Information',

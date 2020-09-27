@@ -52,11 +52,12 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
   }
 
   var message = 'Graph Created by Levy Matsuda\n'+
-      'Tools used: Plotly.js, Leaflet.js,MapBox,ColorBrewer,AdobeColor\n' + 'Sources: ';
+      'Tools used: Plotly.js, ColorBrewer,AdobeColor\n' + 'Sources: "Naples in the Time of Cholera 1884-1911" p119\n' +
+      'http://assets.cambridge.\n';
 
   var config = {
     responsive: true,
-    modeBarButtonsToRemove: ['toImage'],
+    modeBarButtonsToRemove: ['toImage', 'toggleHover'],
     modeBarButtonsToAdd: [
       {
         name: 'Information',

@@ -145,7 +145,7 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   }
 
   var message = 'Graph Created by Levy Matsuda\n'+
-                'Tools used: Plotly.js, Leaflet.js,MapBox,ColorBrewer,AdobeColor\n' + 'csv: CholeraDeaths.csv';
+                'Tools used: Plotly.js, ColorBrewer, AdobeColor\n';
 
   var config = {
     responsive: true,

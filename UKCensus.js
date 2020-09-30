@@ -26,12 +26,6 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
     cellValues[3][i] = total.toString();
   }
 
-  //Source: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-  function addCommas(x) {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-  };
-
-
   var censusData = [{
     type: 'table',
     columnwidth: [300,600,1000],
@@ -55,7 +49,7 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
   var censusLayout = {
     title: {
-      text: "UK Census: Male and Females living in the UK at the same time",
+      text: "UK Census in 1851",
       font: {
         size: 30
       }
@@ -67,7 +61,8 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   var malePieData = [{
     values: cellValues[1],
     labels: cellValues[0],
-    hoverinfo: "label+value",
+    textinfo: 'label',
+    hoverinfo: "percent+value",
     type: 'pie',
     marker: {
       colors: ageColors
@@ -79,7 +74,7 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
   var malePieLayout = {
     title: {
-      text: 'Men living in the UK by Age',
+      text: 'UK Male population in 1851',
       font: {
         size: 30
       }
@@ -89,9 +84,10 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   };
 
   var femalePieData = [{
-    values: cellValues[1],
+    values: cellValues[2],
     labels: cellValues[0],
-    hoverinfo: "label+value",
+    textinfo: "label",
+    hoverinfo: "percent+value",
     type: 'pie',
     marker: {
       colors: ageColors
@@ -103,14 +99,13 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
   var femalePieLayout = {
     title: {
-      text: 'Females Living in the UK by Age',
+      text: 'UK Female population in 1851',
       font: {
         size: 30
       }
     },
-
     height: 700,
-    width: 1200
+    width: 1200,
   };
 
   var maleAges = {
@@ -127,7 +122,7 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
   var maleBarLayout = {
     title: {
-      text: 'Males living in the UK by Age',
+      text: 'UK Male population in 1851',
       font: {
         size: 30
       }
@@ -160,7 +155,7 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
   var femaleBarLayout = {
     title: {
-      text: 'Females living in the UK by Age',
+      text: 'UK Female Population in 1851',
       font: {
         size: 30
       }
@@ -192,12 +187,13 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
     values: [maleTotal,femaleTotal],
     labels: ['males', 'females'],
     marker: {
-      colors: ['#8B9454','#BE8BE0'],
+      colors: ['#A8A651','#DEC7FF'],
     },
     textfont: {
       size: 15,
       color: 'white'
     },
+    textinfo: "label",
     hoverinfo: "label+value",
     type: 'pie'
   }];

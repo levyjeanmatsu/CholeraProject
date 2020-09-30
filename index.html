@@ -13,22 +13,31 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           crossorigin=""></script>
 
+  <link rel="stylesheet" href="style.css">
+
 
 </head>
 <body>
 
 <h1>Cholera Project Dashboard</h1>
 
-<div id='attackTable'></div>
+<p>
+  <div class="center">Created By: Levy-Jean Matsuda</div>
+  <div class="center">Email: levyjean@hawaii.edu</div>
+  <div class="center">Web page created with Github Pages </div>
+</p>
 
+
+<div id='attackTable'></div>
 <p>
   The table above contains data collected on the Cholera outbreak in London in 1854. More specifically, it shows the attacks and deaths per day, and the cumulative attacks and deaths up until that date. An attack is when someone exhibits symptoms of Cholera.
 </p>
+
 <div id='choleraLine' ></div>
 <script src="deathsAndAttacks.js"></script>
 
 <p>
-  The scatter line plot above features the same information we saw in the table we had seen before. The two green lines represents attacks, with the lighter green line representing the attacks that were recorded on that date and the darker green line represents the cumulative attacks. Similarly, the red lines represent deaths where the lighter red line is the deaths recorded on that date and the darker red line represents the cumulative deaths.
+  The scatter line plot above features the same information we saw in the table we had seen before. On the x-axis is the date in month-day format. On the y-axis is the amount of cases per day. The two green lines represents attacks, with the lighter green line representing the attacks that were recorded on that date and the darker green line represents the cumulative attacks. Similarly, the red lines represent deaths where the lighter red line is the deaths recorded on that date and the darker red line represents the cumulative deaths.
 </p>
 
 <div id='naplesTable'></div>
@@ -42,37 +51,45 @@
 </p>
 
 <div id='malePie'></div>
+<p>
+  This pie chart is a representation of UK's male population in 1851. Each "slice" is a different age group. Each slice is labeled by the age group it represents. When you hover over each slice, it will say the percentage of the male population that falls into that age group and the amount of males in that age group.
+</p>
 <div id='femalePie'></div>
 
 <p>
-  The two pie charts above is another representation of the UK Census data shown in the table we saw before. First pie chart isolates the male population of the UK and categorizes the males by age group. The second pie chart isolates the female population of the UK and categorizes the females by age group.
+  This pie chart is a representation of UK's female population in 1851. Each "slice" is a different age group. Each slice is labeled by the age group it represents. When you hover over each slice, it will say the percentage of the female population that falls into that age group and the amount of males in that age group.
 </p>
 
 <div id='maleBar'></div>
+<p>
+  This bar chart is another representation of UK's male population in 1851. On the x-axis is the different age groups the populations were divided into. On the y-axis is the amount of people within that age group. If you hover over each bar, it will tell you the exact amount of people in that age group.
+</p>
 <div id='femaleBar'></div>
 <p>
-  The two bar charts above shows the same information we saw in the UK census table and the pie chart. Like the pie chart, it isolates the male and female populations and categorizes them by age group.
+  This bar chart is another representation of UK's female population in 1851. On the x-axis is the different age groups the populations were divided into. On the y-axis is the amount of women within that age group. If you hover over each bar, it will tell you the exact amount of women in that age group.
 </p>
-
 <div id='totalPie'></div>
 <p>
-  This pie chart shows the total female and male population of the 1851 UK census.
+  This pie chart shows the total female and male population of the 1851 UK census. The green slice represents males while the purple slice represents females.
 </p>
 <script src="UKCensus.js"></script>
 
 <p>Lastly, I created a map of the Cholera outbreak in 1854. During the Cholera outbreak, John Snow (a physician) was studying the cause and he hypothesized it was due to contaminated water from the pumps. This theory was supported by his mapping of the cases, which showed they clustered around a pump located on Broad street. </p>
 
 <p>
-  My map differs slightly from the original due to the changes made to the Soho neighborhood since 1854. The red circles represents the location of a death due to Cholera and the blue pins represent the location of a water pump.
+  My map differs slightly from the original due to the changes made to the Soho neighborhood since 1854. The red circles represents the location of a deaths due to Cholera and the blue pins represent the location of a water pump.
 </p>
 
-<img src="myCholeraMap.png" width="1000" height="1000">
-<div><h1><a href="map.html">Find the interactive map here</a></h1></div>
+<p>
+  To view interactive map, click on the image
+</p>
+
+<a href="map.html">
+  <img src="myCholeraMap.png" height="500" width="1000" align="middle">
+</a>
 <div>
-  <p>"Tools used: Leaflet.js, MapBox"</p>
+  <p>"Tools used: Plotly.js, Leaflet.js, MapBox"</p>
 </div>
-
-
 
 </body>
 </html>

@@ -1,0 +1,26 @@
+body {
+
+}
+h1 {
+  font-size: 50px;
+  font-family: Arial, Verdana;
+  text-align: center;
+  margin-bottom: 2px;
+
+}
+p {
+  padding: 0px;
+  margin-top: 0px;
+  font-size: 20px;
+}
+
+img {
+  align-content: center;
+}
+
+.center {
+  text-align: center;
+  font-size: 15px;
+}
+
+

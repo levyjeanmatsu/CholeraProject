@@ -73,18 +73,8 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
         size: 30
       }
     },
-    xaxis: {
-      title: {
-        text: "Age Groups",
-        size: 15
-      }
-    },
-    yaxis: {
-      title: {
-        text: "Amount of People",
-        size: 15
-      }
-    },
+    xaxis: {title: 'Age'},
+    yaxis: {title: 'Population'},
     barmode: 'group'};
 
 
@@ -116,6 +106,6 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
 
 
   Plotly.newPlot('naplesTable', naplesData, layout, config);
-  Plotly.newPlot('naplesBar', naplesBar, layout, config);
+  Plotly.newPlot('naplesBar', naplesBar, naplesBarLayout, config);
 
 });

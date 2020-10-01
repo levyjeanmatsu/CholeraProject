@@ -57,7 +57,7 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
   var femaleAges = {
     x: cellValues[0],
     y: cellValues[2],
-    name: 'Male Population',
+    name: 'Female Population',
     marker:{
       color: '#DEC7FF'
     },

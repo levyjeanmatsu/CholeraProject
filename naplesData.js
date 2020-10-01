@@ -44,6 +44,50 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
     }
   };
 
+  var maleAges = {
+    x: cellValues[0],
+    y: cellValues[1],
+    name: 'Male Population',
+    marker:{
+      color: '#A8A651'
+    },
+    type: 'bar'
+  };
+
+  var femaleAges = {
+    x: cellValues[0],
+    y: cellValues[2],
+    name: 'Male Population',
+    marker:{
+      color: '#DEC7FF'
+    },
+    type: 'bar'
+
+  }
+  var naplesBar = [maleAges, femaleAges];
+
+  var naplesBarLayout = {
+    title: {
+      text: 'Naples Population',
+      font: {
+        size: 30
+      }
+    },
+    xaxis: {
+      title: {
+        text: "Age Groups",
+        size: 15
+      }
+    },
+    yaxis: {
+      title: {
+        text: "Amount of People",
+        size: 15
+      }
+    },
+    barmode: 'group'};
+
+
   var info = {
     'width': 857.1,
     'height': 1000,
@@ -72,4 +116,6 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
 
 
   Plotly.newPlot('naplesTable', naplesData, layout, config);
+  Plotly.newPlot('naplesBar', naplesBar, layout, config);
+
 });

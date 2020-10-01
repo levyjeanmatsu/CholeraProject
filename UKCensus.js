@@ -35,9 +35,6 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   censusVals.push(tableFemales);
   censusVals.push(tableTot);
 
-
-  console.log(censusVals);
-
   var censusData = [{
     type: 'table',
     columnwidth: [300,600,1000],

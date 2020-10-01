@@ -10,7 +10,7 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
 
   var headerValues = [];
   var cellValues = [];
-  var censusValues = [];
+  var censusVals = [];
 
   for (i = 0; i < headerNames.length; i++) {
     headerValue = [headerNames[i]];
@@ -26,6 +26,18 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
     cellValues[3][i] = total.toString();
   }
 
+  var tableMales = cellValues[1].map(function(x) {return Number(x).toLocaleString();});
+  var tableFemales = cellValues[2].map(function(x) {return Number(x).toLocaleString();});
+  var tableTot = cellValues[3].map(function(x) {return Number(x).toLocaleString();});
+
+  censusVals.push(cellValues[0]);
+  censusVals.push(tableMales);
+  censusVals.push(tableFemales);
+  censusVals.push(tableTot);
+
+
+  console.log(censusVals);
+
   var censusData = [{
     type: 'table',
     columnwidth: [300,600,1000],
@@ -38,7 +50,7 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
       font: {family: "Arial", size: 15, color: "white"}
     },
     cells: {
-      values: cellValues,
+      values: censusVals,
       align: ["left", "left", "left", "left" ],
       line: {color: "black", width: 1},
       font: {family: "Arial", size: 12, color: ["black"]}
@@ -55,8 +67,6 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
       }
     }
   }
-
-  console.log(cellValues);
 
   var malePieData = [{
     values: cellValues[1],

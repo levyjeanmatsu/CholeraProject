@@ -57,12 +57,15 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   var ageColors = ['rgb(141,211,199)','rgb(255,255,179)','rgb(190,186,218)','rgb(251,128,114)','rgb(128,177,211)','rgb(253,180,98)','rgb(179,222,105)','rgb(252,205,229)','rgb(217,217,217)'];
 
   var censusLayout = {
+    /*
     title: {
       text: "UK Census in 1851",
       font: {
         size: 30
       }
     }
+
+     */
   }
 
   var malePieData = [{
@@ -71,6 +74,10 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
     textinfo: 'label',
     hoverinfo: "percent+value",
     type: 'pie',
+    margin: {
+      'l':0,
+      'r':0,
+    },
     marker: {
       colors: ageColors
     },
@@ -80,14 +87,21 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   }];
 
   var malePieLayout = {
+    /*
     title: {
       text: 'UK Male population in 1851',
       font: {
         size: 30
       }
     },
-    //height: 700,
-    //width: 1200
+    */
+    showlegend: false,
+    margin: {
+      l: 0,
+      pad: 0,
+    },
+    height: 600,
+    width: 700
   };
 
   var femalePieData = [{
@@ -105,14 +119,16 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   }];
 
   var femalePieLayout = {
+    /*
     title: {
       text: 'UK Female population in 1851',
       font: {
         size: 30
       }
     },
-    //height: 700,
-    //width: 1200,
+     */
+    height: 600,
+    width: 700,
   };
 
   var maleAges = {
@@ -128,12 +144,15 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   var maleBarData = [maleAges];
 
   var maleBarLayout = {
+    /*
     title: {
       text: 'UK Male population in 1851',
       font: {
         size: 30
       }
     },
+
+     */
     xaxis: {
       title: {
         text: "Age Groups",
@@ -145,6 +164,10 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
         text: "Amount of People",
         size: 15
       }
+    },
+    margin: {
+      l: 100,
+      t: 50,
     },
     barmode: 'group'};
 
@@ -161,12 +184,15 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   var femaleBarData = [femaleAges];
 
   var femaleBarLayout = {
+    /*
     title: {
       text: 'UK Female Population in 1851',
       font: {
         size: 30
       }
     },
+
+     */
     xaxis: {
       title: {
         text: "Age Groups",
@@ -178,6 +204,12 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
         text: "Amount of People",
         size: 15
       }
+    },
+    margin: {
+      l:150,
+      t:50,
+      r: 50,
+
     },
     barmode: 'group'};
 
@@ -206,14 +238,18 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
   }];
 
   var totalPieLayout = {
+    /*
     title: {
       text: 'UK Population by Gender',
       font: {
         size: 30
       }
+
     },
-    height: 700,
-    width: 1200
+
+     */
+    height: 600,
+    width: 700,
   };
 
   var info = {

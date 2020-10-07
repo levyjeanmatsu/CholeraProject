@@ -27,11 +27,37 @@
 
 <h1>Cholera Outbreak in 1854</h1>
 
-  <div id='attackTable'></div>
-  <div id='choleraLine' ></div>
+<div class="grid-container">
+  <div class="item1" id="attackTable"></div>
+  <div class="item2">
+    <p>
+      The table and the line graph both displays data taken by Robin Wilson. The data shows the number of attacks and deaths that occured due to Cholera in London in 1854. From this data, we see that the general trend of deaths and attacks correlate with each other. However, The spike for the amount of deaths in one day occur on September 2, 1854 while the spike for attacks in one day  occur on sep 1.
+    </p>
+  </div>
+</div>
+
+<div class="ownrow" id='choleraLine' ></div>
+
   <script src="deathsAndAttacks.js"></script>
 
-<div id="mapId">
+<h2>
+  Mapping out the Cholera Outbreak
+</h2>
+
+<div class="grid-container">
+  <div class="ownrow">
+    <p>
+      This map displays data gathered by Robin Wilson. During the Cholera Outbreak in 1854, John Snow (a physician) was studying the cause and he hypothesized it was due to contaminated water from the pumps. This theory was supported by his mapping of the cases, which showed they clustered around a pump located on Broad street.
+    </p>
+
+    <p>
+      My map differs slightly from the original due to the changes made to the Soho neighborhood since 1854. The red circles represents the location of a deaths due to Cholera and the blue pins represent the location of a water pump. We see in this map, we see that the deaths surround the pump located on Broadwick St., which used to be Broad street.
+    </p>
+  </div>
+</div>
+
+
+<div id="mapId" class="mappingOf">
   <script>
 
     Plotly.d3.csv("choleraMapLocations.csv", function(err, rows){
@@ -111,6 +137,40 @@
           circle.bindPopup(deathCont);
         }
       }
+
+      var deathMarker  = L.circle({
+        color: 'red',
+        fillOpacity: 0,
+        fillColor: 'red',
+        radius: 0.7
+      });
+
+      var pumpMarker =  L.marker();
+
+
+/*
+      var legend = L.control({position: 'topright'});
+
+      legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            locs = ["Deaths", "Pumps"],
+            labels = [deathMarker,pumpMarker];
+
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < locs.length; i++) {
+          div.innerHTML +=
+              locs[i] + (" <img src="+ labels[i])+" height='50' width='50'>" +'<br>';
+        }
+
+        return div;
+      };
+
+      legend.addTo(mymap);
+
+
+ */
+
 
 
     });

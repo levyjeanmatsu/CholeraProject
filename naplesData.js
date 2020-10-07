@@ -36,12 +36,15 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
   }]
 
   var layout = {
+    /*
     title: {
       text: "Fatalities in Naples",
       font: {
         size: 30
       }
     }
+
+     */
   };
 
   var maleAges = {
@@ -67,12 +70,15 @@ Plotly.d3.csv("naplesCholeraAgeSexData.csv", function(err, rows){
   var naplesBar = [maleAges, femaleAges];
 
   var naplesBarLayout = {
-    title: {
-      text: 'Naples Population',
-      font: {
-        size: 30
-      }
-    },
+        /*
+        title: {
+          text: 'Naples Population',
+          font: {
+            size: 30
+          }
+        },
+
+        */
     xaxis: {title: 'Age'},
     yaxis: {title: 'Population'},
     barmode: 'group'};

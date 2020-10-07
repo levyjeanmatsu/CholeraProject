@@ -6,13 +6,24 @@ h1 {
   font-family: Arial, Verdana;
   text-align: center;
   margin-bottom: 2px;
-
-
+  color: rgb(80,80,80);
+}
+h2 {
+  font-size: 30px;
+  font-family: Arial, Verdana;
+  text-align: center;
+  margin-bottom: 2px;
+  color: rgb(80,80,80);
 }
 p {
   padding: 0px;
-  margin-top: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   font-size: 20px;
+  background-color: #3A5B94;
+  color: white;
 }
 
 img {
@@ -24,22 +35,51 @@ img {
   font-size: 15px;
 }
 
-.graphContainer {
-  border: 3px solid #fff;
-  padding: 20px;
+.mappingOf {
+  padding-top: 100px;
 }
 
-.leftcontent {
-  width: 50%;
-  float: left;
-  padding: 20px;
+.grid-container {
+  display: grid;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  justify-items: center;
 }
 
-.rightcontent {
-  width: 50%;
-  float: right;
-  padding: 20px;
+.item1 {
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 20;
+  place-self: center;
 }
+
+.item2 {
+  grid-column: 7 / span 6;
+  grid-row: 1 / span 20;
+  margin-top: 20px;
+  place-self: center;
+}
+
+.item3 {
+  grid-column: 1 / span 4;
+  grid-row: 20 / span 20;
+  margin-top: 20px;
+  align-self: center;
+}
+
+.item4 {
+  grid-column: 4 / span 8;
+  grid-row: 20 / span 20;
+  margin-top: 20px;
+  align-self: center;
+}
+
+
+.ownrow {
+
+  grid-column: 1 / span 13;
+  place-self: center;
+}
+
 
 #mapId {
   height: 500px;

@@ -34,6 +34,9 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   var tableData = [{
     type: 'table',
     columnorder: [0,1,2,3,4],
+    xaxis: 'x',
+    yaxis: 'y',
+    //domain: {x: [0,0.4], y: [0,1]},
     header: {
       values: headerValues,
       align: ["left"],
@@ -52,6 +55,7 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   var attackTrace = {
     x: cellValues[0],
     y: cellValues[1],
+    type: 'scatter',
     mode: 'lines+markers',
     name: 'Attacks',
     marker: {
@@ -67,6 +71,7 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   var deathTrace = {
     x: cellValues[0],
     y: cellValues[2],
+    type: 'scatter',
     mode: 'lines+markers',
     name: 'Deaths',
     marker: {
@@ -82,6 +87,7 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   var totAttackTrace = {
     x: cellValues[0],
     y: cellValues[3],
+    type: 'scatter',
     mode: 'lines+markers',
     name: 'Total Attacks',
     line: {
@@ -97,6 +103,7 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   var totDeathTrace = {
     x: cellValues[0],
     y: cellValues[4],
+    type: 'scatter',
     mode: 'lines+markers',
     name: 'Total Deaths',
     line: {
@@ -130,6 +137,41 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
     }
   };
 
+  var subData = [tableData, attackTrace,deathTrace,totDeathTrace, totAttackTrace]
+  var subLayout = {
+    xaxis1: {
+      domain: [0.5, 1],
+      tickangle: -45,
+      title: "date"
+    },
+    xaxis2: {
+      domain: [0.5, 1],
+    },
+    xaxis3: {
+      domain: [0.5, 1],
+    },
+    xaxis4: {
+      domain: [0.5, 1],
+    },
+    yaxis1: {
+      domain: [0, 1],
+    },
+    yaxis2: {
+      domain: [0, 1],
+
+    },
+    yaxis3: {
+      domain: [0, 1],
+
+    },
+    yaxis4: {
+      domain: [0, 1],
+    },
+
+
+  }
+
+
   var info = {
     'width': 857.1,
     'height': 1000,
@@ -159,4 +201,7 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   Plotly.newPlot('attackTable', tableData, tableLayout, config);
 
   Plotly.newPlot('choleraLine', lineData, layout, config);
+
+  Plotly.newPlot('sub', subData, subLayout, config);
+
 });

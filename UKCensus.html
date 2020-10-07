@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cholera Project</title>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html">Home</a>
+  <a href="map.html">Cholera Outbreak</a>
+  <a href="naples.html">Naples</a>
+  <a href="UKCensus.html">UK Census</a>
+</div>
+
+<div id='censusTable'></div>
+<p>
+  This table shows data from the UK census in 1851. It categorizes UK's population by gender and age group. It shows both, the total amount of people belonging to each age group as well as the amount of males and females in each age group.
+</p>
+
+<div id='malePie'></div>
+<div id='femalePie'></div>
+
+<!--
+<p>
+  This pie chart is a representation of UK's male population in 1851. Each "slice" is a different age group. Each slice is labeled by the age group it represents. When you hover over each slice, it will say the percentage of the male population that falls into that age group and the amount of males in that age group.
+</p>
+
+
+<p>
+  This pie chart is a representation of UK's female population in 1851. Each "slice" is a different age group. Each slice is labeled by the age group it represents. When you hover over each slice, it will say the percentage of the female population that falls into that age group and the amount of males in that age group.
+</p>
+-->
+
+  <div id='maleBar'></div>
+  <p>
+    This bar chart is another representation of UK's male population in 1851. On the x-axis is the different age groups the populations were divided into. On the y-axis is the amount of people within that age group. If you hover over each bar, it will tell you the exact amount of people in that age group.
+  </p>
+  <div id='femaleBar'></div>
+  <p>
+    This bar chart is another representation of UK's female population in 1851. On the x-axis is the different age groups the populations were divided into. On the y-axis is the amount of women within that age group. If you hover over each bar, it will tell you the exact amount of women in that age group.
+  </p>
+  <div id='totalPie'></div>
+  <p>
+    This pie chart shows the total female and male population of the 1851 UK census. The green slice represents males while the purple slice represents females.
+  </p>
+  <script src="UKCensus.js"></script>
+
+
+</body>
+</html>

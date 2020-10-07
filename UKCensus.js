@@ -86,8 +86,8 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
         size: 30
       }
     },
-    height: 700,
-    width: 1200
+    //height: 700,
+    //width: 1200
   };
 
   var femalePieData = [{
@@ -111,8 +111,8 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
         size: 30
       }
     },
-    height: 700,
-    width: 1200,
+    //height: 700,
+    //width: 1200,
   };
 
   var maleAges = {

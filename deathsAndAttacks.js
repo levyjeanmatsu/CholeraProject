@@ -33,7 +33,6 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
 
   var tableData = [{
     type: 'table',
-    columnwidth: [200,200,200,200,200],
     columnorder: [0,1,2,3,4],
     header: {
       values: headerValues,
@@ -114,14 +113,8 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   var lineData = [attackTrace, deathTrace, totAttackTrace, totDeathTrace];
 
   var tableLayout = {
-    title: {
-      text: "Cholera Deaths and Attacks in 1854",
-      font: {
-        size: 30
-      }
-    },
   };
-
+  
   var layout = {
     xaxis: {
       title: 'Date',

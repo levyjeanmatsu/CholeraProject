@@ -5,6 +5,8 @@
   <title>Cholera Project Map</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+  <link rel="stylesheet" href="style.css">
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin=""/>
@@ -13,95 +15,107 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           crossorigin=""></script>
 
+
 </head>
 <body>
-  <div id="mapId" style="width:1920px; height:1080px"></div>
-<script>
+<div class="topnav">
+  <a href="index.html">Home</a>
+  <a href="map.html">Cholera Outbreak</a>
+  <a href="naples.html">Naples</a>
+  <a href="UKCensus.html">UK Census</a>
+</div>
 
-  Plotly.d3.csv("choleraMapLocations.csv", function(err, rows){
+<h1>Cholera Outbreak in 1854</h1>
 
-    var mymap = L.map('mapId', {
-      zoomSnap: 0.25
-    });
+  <div id='attackTable'></div>
+  <div id='choleraLine' ></div>
+  <script src="deathsAndAttacks.js"></script>
 
-    var corner1 = L.latLng(51.5158679719, -0.14633377838163142),
-        corner2 = L.latLng(51.509717905470666, -0.13252809674172113),
-        bounds = L.latLngBounds(corner1, corner2);
+<div id="mapId">
+  <script>
 
-    mymap.setView([51.51342615361525,-0.13528545915607992]);
-    mymap.setZoom(10);
-    function unpack(rows, key) {
-      return rows.map(function(row) { return row[key]; });
-    }
+    Plotly.d3.csv("choleraMapLocations.csv", function(err, rows){
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox/streets-v11',
-      tileSize: 512,
-      zoomOffset: -1,
-      accessToken: 'pk.eyJ1IjoibGV2eWplYW4iLCJhIjoiY2tmZzRrdTBhMDF5eTJxcHAyc2oyeTUxbyJ9.4gtxzCh3vsajA99VB5fk7g'
-    }).addTo(mymap);
+      var mymap = L.map('mapId', {
+        zoomSnap: 0.25
+      });
 
+      mymap.setView([51.513,-0.135], 16);
 
+      //51.51042306836899
+      //-0.1300787787954505
 
-    rows.map(function(row){
-      if (row.deaths == 0) {
-        row.type = 'pump';
-      } else  {
-        row.type = 'death';
+      var corner1 = L.latLng(51.5158679719, -0.14633377838163142),
+          corner2 = L.latLng(51.509717905470666, -0.13252809674172113),
+          bounds = L.latLngBounds(corner1, corner2);
+
+      //mymap.setView([51.51342615361525,-0.13528545915607992]);
+      //mymap.setZoom(10);
+      function unpack(rows, key) {
+        return rows.map(function(row) { return row[key]; });
       }
-    });
 
-    rows.map(function(row){
-      if (row.type == 'pump') {
-        row.text = ' ';
-      } else {
-        row.text = row.deaths;
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/light-v10',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoibGV2eWplYW4iLCJhIjoiY2tmZzRrdTBhMDF5eTJxcHAyc2oyeTUxbyJ9.4gtxzCh3vsajA99VB5fk7g'
+      }).addTo(mymap);
+
+
+
+      rows.map(function(row){
+        if (row.deaths == 0) {
+          row.type = 'pump';
+        } else  {
+          row.type = 'death';
+        }
+      });
+
+      rows.map(function(row){
+        if (row.type == 'pump') {
+          row.text = ' ';
+        } else {
+          row.text = row.deaths;
+        }
+      });
+
+
+      var long = unpack(rows, 'long');
+      var lat = unpack(rows, 'lat');
+      var deaths = unpack(rows, 'deaths');
+      var type = unpack(rows, 'type');
+
+      var markers = L.latLngBounds();
+      for (i = 0; i < rows.length; i++) {
+        markers.extend([Number(lat[i]), Number(long[i])]);
+
+        if (type[i] == 'pump') {
+          marker = L.marker([Number(lat[i]), Number(long[i])]).addTo(mymap);
+          marker.bindPopup("<div>" + "Pump Location" + "</div>" + "<div>" + "Coordinate: " + lat[i] + "," + long[i] + "</div>");
+        } else {
+
+          circle = L.circle([Number(lat[i]), Number(long[i])], {
+            color: 'red',
+            fillOpacity: 0,
+            fillColor: 'red',
+            radius: 0.7
+          }).addTo(mymap);
+
+          var deathCont =
+              "<div>" + "Deaths: " + deaths[i] + "</div>"
+              + "<div>" + "Coordinates: " + lat[i] + "," + long[i] + "</div>"
+
+          circle.bindPopup(deathCont);
+        }
       }
+
+
     });
-
-    var types = ['pump', 'death'];
-
-
-    var long = unpack(rows, 'long');
-    var lat = unpack(rows, 'lat');
-    var deaths = unpack(rows, 'deaths');
-    var type = unpack(rows, 'type');
-
-    var markers = L.latLngBounds();
-    for (i = 0; i < rows.length; i++) {
-      markers.extend([Number(lat[i]), Number(long[i])]);
-
-      if (type[i] == 'pump') {
-        marker = L.marker([Number(lat[i]), Number(long[i])]).addTo(mymap);
-        marker.bindPopup("<div>" + "Pump Location" + "</div>" + "<div>" + "Coordinate: " + lat[i] + "," + long[i] + "</div>");
-      } else {
-
-        circle = L.circle([Number(lat[i]), Number(long[i])], {
-          color: 'red',
-          fillOpacity: 0,
-          fillColor: 'red',
-          radius: 0.7
-        }).addTo(mymap);
-
-        var deathCont =
-            "<div>" + "Deaths: " + deaths[i] + "</div>"
-            + "<div>" + "Coordinates: " + lat[i] + "," + long[i] + "</div>"
-
-        circle.bindPopup(deathCont);
-      }
-    }
-    mymap.setView([51.51042306836899,-0.1300787787954505], 16);
-
-
-
-
-
-
-
-  });
-</script>
+  </script>
+</div>
 
 </body>
 </html>

@@ -233,7 +233,7 @@ Plotly.d3.csv("UKcensus1851.csv", function(err, rows){
       color: 'white'
     },
     textinfo: "label",
-    hoverinfo: "label+value+percent",
+    hoverinfo: "value+percent",
     type: 'pie'
   }];
 

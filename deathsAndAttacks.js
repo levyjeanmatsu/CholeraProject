@@ -180,7 +180,7 @@ Plotly.d3.csv("choleraDeaths.csv", function(err, rows){
   }
 
   var message = 'Graph Created by Levy Matsuda\n'+
-                'Tools used: Plotly.js, ColorBrewer, AdobeColor\n';
+                'Tools used: Plotly.js, ColorBrewer, AdobeColor\n' + 'Data collected by Robin Wilson (robin@rtwilson.com, www.rtwilson.com/academic) in January 2011\n';
 
   var config = {
     responsive: true,
